@@ -3,9 +3,7 @@ commands:
         description: Run lint checks Flutter code base on the rules set on `analysis_options.yml`
         steps:
             - run:
-                command: |-
-                    cd app
-                    flutter analyze . || { echo 'Lint check failed'; exit 1; }
+                command: flutter analyze . || { echo 'Lint check failed'; exit 1; }
                 name: Analyze
     build-android:
         description: Builds APK artifact for Android
@@ -17,17 +15,13 @@ commands:
         description: Run checks if Flutter code is formatted
         steps:
             - run:
-                command: |-
-                    cd app
-                    flutter format --set-exit-if-changed . || { echo 'Format check failed'; exit 1; }
+                command: flutter format --set-exit-if-changed . || { echo 'Format check failed'; exit 1; }
                 name: Analyze
     test:
         description: Runs the tests of your Flutter app
         steps:
             - run:
-                command: |-
-                    cd app
-                    flutter analyze . || { echo 'Lint check failed'; exit 1; }
+                command: flutter analyze . || { echo 'Lint check failed'; exit 1; }
                 name: Test
 executors:
     android:
