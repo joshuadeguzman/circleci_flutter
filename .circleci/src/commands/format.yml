@@ -2,6 +2,5 @@ description: "Run checks if Flutter code is formatted"
 steps:
   - run:
       name: "Analyze"
-      command: |-
-        cd app
+      command: |- 
         flutter format --set-exit-if-changed . || { echo 'Format check failed'; exit 1; }
