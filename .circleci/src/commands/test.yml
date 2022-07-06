@@ -1,0 +1,7 @@
+description: "Runs the tests of your Flutter app"
+steps:
+  - run:
+      name: "Test"
+      command: |-
+        cd app
+        flutter analyze . || { echo 'Lint check failed'; exit 1; }

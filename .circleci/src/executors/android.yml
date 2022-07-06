@@ -1,0 +1,2 @@
+docker:
+  - image: cimg/android:2022.06

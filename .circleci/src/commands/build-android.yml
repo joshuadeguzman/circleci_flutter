@@ -1,0 +1,5 @@
+description: "Builds APK artifact for Android"
+steps:
+  - run:
+    name: "Build APK"
+    command: flutter build apk

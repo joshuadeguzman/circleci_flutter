@@ -1,7 +1,55 @@
-version: 2.1
+commands:
+    analyze:
+        description: Run lint checks Flutter code base on the rules set on `analysis_options.yml`
+        steps:
+            - run:
+                command: |-
+                    cd app
+                    flutter analyze . || { echo 'Lint check failed'; exit 1; }
+                name: Analyze
+    build-android:
+        description: Builds APK artifact for Android
+        steps:
+            - command: flutter build apk
+              name: Build APK
+              run: null
+    format:
+        description: Run checks if Flutter code is formatted
+        steps:
+            - run:
+                command: |-
+                    cd app
+                    flutter format --set-exit-if-changed . || { echo 'Format check failed'; exit 1; }
+                name: Analyze
+    test:
+        description: Runs the tests of your Flutter app
+        steps:
+            - run:
+                command: |-
+                    cd app
+                    flutter analyze . || { echo 'Lint check failed'; exit 1; }
+                name: Test
+executors:
+    android:
+        docker:
+            - image: cimg/android:2022.06
+jobs:
+    deploy-android:
+        environment:
+            FLUTTER_CHANNEL: stable
+            FLUTTER_VERSION: 3.0.1
+        executor: android
+        steps:
+            - checkout:
+                path: app
+            - flutter/install_sdk_and_pub:
+                flutter_version: 3.0.1
+            - format
+            - analyze
+            - test
+            - build-android
+    test: {}
 orbs:
-    hello: circleci/hello-build@0.0.5
-workflows:
-    "Hello Workflow":
-        jobs:
-          - hello/hello-build
+    flutter: circleci/flutter@1.1.0
+version: 2.1
+

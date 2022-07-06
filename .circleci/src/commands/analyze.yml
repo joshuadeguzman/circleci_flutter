@@ -1,0 +1,7 @@
+description: "Run lint checks Flutter code base on the rules set on `analysis_options.yml`"
+steps:
+  - run:
+      name: "Analyze"
+      command: |-
+        cd app
+        flutter analyze . || { echo 'Lint check failed'; exit 1; }
