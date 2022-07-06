@@ -1,4 +1,4 @@
-package com.example.circleci
+package com.joshuamdeguzman.circleci_flutter
 
 import io.flutter.embedding.android.FlutterActivity
 
