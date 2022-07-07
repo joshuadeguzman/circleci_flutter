@@ -3,3 +3,6 @@ jobs:
   - build-android:
       requires:
         - tests
+  - build-ios:
+      requires:
+        - tests

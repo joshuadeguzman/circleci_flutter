@@ -3,14 +3,20 @@ commands:
         description: Run lint checks Flutter code base on the rules set on `analysis_options.yml`
         steps:
             - run:
-                command: flutter analyze . || { echo 'Lint check failed'; exit 1; }
+                command: flutter analyze .
                 name: Analyze
     build-android:
-        description: Builds APK artifact for Android
+        description: Builds APK for Android
         steps:
             - run:
                 command: flutter build apk
                 name: Build APK
+    build-ios:
+        description: Builds IPA for iOS
+        steps:
+            - run:
+                command: flutter build ios --no-codesign
+                name: Build IPA
     format:
         description: Run checks if Flutter code is formatted
         steps:
@@ -21,27 +27,35 @@ commands:
         description: Runs the tests of your Flutter app
         steps:
             - run:
-                command: flutter analyze . || { echo 'Lint check failed'; exit 1; }
+                command: flutter test
                 name: Test
 executors:
     android:
         docker:
             - image: cimg/android:2022.06
+    default:
+        docker:
+            - image: cimg/base:stable
+    macos:
+        macos:
+            xcode: 13.4.1
 jobs:
     build-android:
-        environment:
-            FLUTTER_CHANNEL: stable
-            FLUTTER_VERSION: 3.0.1
         executor: android
         steps:
             - checkout
             - flutter/install_sdk_and_pub:
                 flutter_version: 3.0.1
             - build-android
+    build-ios:
+        executor: macos
+        steps:
+            - checkout
+            - flutter/install_sdk_and_pub:
+                flutter_version: 3.0.1
+            - flutter/install_ios_pod
+            - build-ios
     tests:
-        environment:
-            FLUTTER_CHANNEL: stable
-            FLUTTER_VERSION: 3.0.1
         executor: android
         steps:
             - checkout
@@ -58,6 +72,9 @@ workflows:
         jobs:
             - tests
             - build-android:
+                requires:
+                    - tests
+            - build-ios:
                 requires:
                     - tests
 

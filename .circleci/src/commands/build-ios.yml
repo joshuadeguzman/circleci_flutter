@@ -1,0 +1,5 @@
+description: "Builds IPA for iOS"
+steps:
+  - run:
+      name: "Build IPA"
+      command: flutter build ios --no-codesign
