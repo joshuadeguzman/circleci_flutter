@@ -3,4 +3,4 @@ steps:
   - run:
       name: "Analyze"
       command: |-
-        flutter analyze . || { echo 'Lint check failed'; exit 1; }
+        flutter analyze .
