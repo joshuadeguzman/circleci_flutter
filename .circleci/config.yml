@@ -53,7 +53,6 @@ jobs:
             - checkout
             - flutter/install_sdk_and_pub:
                 flutter_version: 3.0.1
-            - flutter/install_ios_pod
             - build-ios
     tests:
         executor: android
