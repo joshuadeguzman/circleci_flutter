@@ -38,33 +38,33 @@ executors:
             - image: cimg/base:stable
     macos:
         macos:
-            xcode: 13.4.1
+            xcode: 15.0.0
 jobs:
     build-android:
         executor: android
         steps:
             - checkout
             - flutter/install_sdk_and_pub:
-                flutter_version: 3.0.1
+                flutter_version: 3.10.0
             - build-android
     build-ios:
         executor: macos
         steps:
             - checkout
             - flutter/install_sdk_and_pub:
-                flutter_version: 3.0.1
+                flutter_version: 3.10.0
             - build-ios
     tests:
         executor: android
         steps:
             - checkout
             - flutter/install_sdk_and_pub:
-                flutter_version: 3.0.1
+                flutter_version: 3.10.0
             - format
             - analyze
             - test
 orbs:
-    flutter: circleci/flutter@1.1.0
+    flutter: circleci/flutter@2.0.0
 version: 2.1
 workflows:
     main:
